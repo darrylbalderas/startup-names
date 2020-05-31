@@ -2,6 +2,9 @@ from googletrans import Translator
 from googletrans.constants import LANGUAGES, LANGCODES
 
 import argparse
+import logging
+import sys
+
 
 top_languages = [(t.lower(), LANGCODES[t.lower()]) for t in [
       "chinese (traditional)",
@@ -20,6 +23,15 @@ top_languages = [(t.lower(), LANGCODES[t.lower()]) for t in [
       "Javanese"
 ]]
 
+def setup_logger():
+    logger = logging.getLogger("translate")
+    logger.setLevel(logging.INFO)
+    handler = logging.StreamHandler(sys.stdout)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger
+
 
 def setup_parser():
     parser = argparse.ArgumentParser(description='Translate word in top 14 languages')
@@ -30,15 +42,16 @@ def setup_parser():
 
 
 def main():
+    logger = setup_logger()
     args = setup_parser().parse_args()
     translator = Translator()
     word = args.word
-    print(f"Original word :{word}")
-    print("------------")
+    logger.info(f"Original word :{word}")
+    logger.info("------------")
     for index, l in enumerate(top_languages):
         language, code = l
         translate_word = translator.translate(word, dest=code)
-        print(f"{index + 1}. {language} translated word : {translate_word.text}")
+        logger.info(f"{index + 1}. {language} translated word : {translate_word.text}")
 
 
 if __name__ == '__main__':
