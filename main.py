@@ -5,29 +5,19 @@ import argparse
 import logging
 import sys
 
-
 top_languages = [(t.lower(), LANGCODES[t.lower()]) for t in [
-      "chinese (traditional)",
-      "chinese (simplified)",
-      "hindi",
-      "Spanish",
-      "Arabic",
-      "Malay",
-      "Russian",
-      "Bengali",
-      "Portuguese",
-      "French",
-      "Hausa",
-      "Punjabi",
-      "Telugu",
-      "Javanese"
+    "chinese (traditional)", "chinese (simplified)", "hindi", "Spanish", "Arabic",
+    "Malay", "Russian", "Bengali", "Portuguese", "French", "Hausa", "Punjabi", "Telugu",
+    "Javanese"
 ]]
+
 
 def setup_logger():
     logger = logging.getLogger("translate")
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
@@ -35,9 +25,9 @@ def setup_logger():
 
 def setup_parser():
     parser = argparse.ArgumentParser(description='Translate word in top 14 languages')
-    parser.add_argument('word', type=str,
+    parser.add_argument('word',
+                        type=str,
                         help='Word you wish to translate in top 14 languages')
-
     return parser
 
 
